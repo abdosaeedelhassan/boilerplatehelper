@@ -11,6 +11,8 @@ class BuilderSteps
     private $templates_dir_path;
 
     private $models_dir_path;
+    private $models_traits_dir_path;
+
     private $routes_auth_file_path;
 
 
@@ -18,6 +20,7 @@ class BuilderSteps
     {
         $this->templates_dir_path = app_path('Console/Commands/' . $this->app_name . '/templates');
         $this->models_dir_path = app_path('Domains/Auth/Models');
+        $this->models_traits_dir_path = $this->models_dir_path.'/Traits';
         $this->routes_auth_file_path = base_path('routes/backend/auth.php');
     }
 
@@ -78,20 +81,28 @@ class BuilderSteps
         $str = str_replace('//fileds', $fields, $fileHelper->getContent());
         $str = str_replace('ModelClass', $model_name, $str);
 
-        $use_attribute = 'use App\\Domains\\Auth\\Models\\Traits\\Attribute\\'.$model_name.'Attribute;'."\n//use_statement_path";
-        $str = str_replace('//use_statement_path',$use_attribute , $str);
-        $use_method = 'use App\\Domains\\Auth\\Models\\Traits\\Method\\'.$model_name.'Method;'."\n";
-        $str = str_replace('//use_statement_path',$use_method , $str);
-        $use_name='use '.$model_name.'Method,'.$model_name.'Attribute;'."\n";
-        $str = str_replace('//use_statement_name',$use_name , $str);
+        $use_name = '';
+        $ctr = 0;
+        foreach (['Attribute','Method','Relationship','Scope'] as $key) {
+            $use_attribute = 'use App\\Domains\\Auth\\Models\\Traits\\'.$key.'\\'.$model_name.$key.';'."\n//use_statement_path";
+            $str = str_replace('//use_statement_path', $use_attribute, $str);
+            if ($ctr > 0) {
+                $use_name .= ',';
+            }
+            $ctr++;
+            $use_name .= $model_name.$key;
+            $fileHelper = new FileHelper($this->templates_dir_path . '/Traits'.$key.'.php');
+            $temp = str_replace('Traits'.$key, ucfirst($model_name).$key, $fileHelper->getContent());
+            $this->createDir($this->models_traits_dir_path.DIRECTORY_SEPARATOR.$key);
+            $this->createFile($this->models_traits_dir_path.DIRECTORY_SEPARATOR.$key.DIRECTORY_SEPARATOR.ucfirst($model_name).$key.'.php', $temp);
+        }
 
-
+        $use_name = 'use '.$use_name.";\n";
+        $str = str_replace('//use_statement_name', $use_name, $str);
         /**
          * create model file
          */
         $this->createFile($this->models_dir_path.DIRECTORY_SEPARATOR.ucfirst($model_name).'.php', $str);
-
-        //$this->createDir($this->models_dir_path.DIRECTORY_SEPARATOR.ucfirst($model_name));
 
         return 'Model '.$model_name.' created...';
     }

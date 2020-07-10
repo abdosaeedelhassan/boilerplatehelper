@@ -14,10 +14,8 @@ class FileHelper
      */
     public function __construct($path)
     {
-        $this->filename=$path;
+        $this->filename = $path;
     }
-
-
 
     /**
      * @return bool|false|string
@@ -29,5 +27,14 @@ class FileHelper
         }
 
         return file_get_contents($this->filename);
+    }
+
+    public function setContent($content)
+    {
+        if (! $this->filename || ! is_readable($this->filename) || is_dir($this->filename)) {
+            return false;
+        }
+
+        file_put_contents($this->filename, $content);
     }
 }

@@ -7,6 +7,11 @@ use Illuminate\Console\Command;
 
 class CrudBuilder extends Command
 {
+    private $app_name = 'boilerplatehelper';
+    private $to_do_list_file_path;
+    private $models_dir_path;
+
+
     /**
      * The name and signature of the console command.
      *
@@ -29,6 +34,9 @@ class CrudBuilder extends Command
     public function __construct()
     {
         parent::__construct();
+        $this->to_do_list_file_path = app_path('Console/Commands/' . $this->app_name . DIRECTORY_SEPARATOR.'ToDoList.php');
+        $this->models_dir_path = app_path('Domains/Auth/Models');
+
     }
 
     /**
@@ -43,7 +51,18 @@ class CrudBuilder extends Command
 
         $this->info('Welcome in asaycrudbuilder for laravel boilerplate');
 
-        $this->info($builder->getRoutes('providers'));
+        $to_do_list_content = include  $this->to_do_list_file_path;
+
+        foreach ($to_do_list_content as $item) {
+            // check if model not exists
+            if (! file_exists($this->models_dir_path.DIRECTORY_SEPARATOR.ucfirst($item['basics']['tablename']).'.php')) {
+
+
+                $this->info($builder->createModelFile($item));
+
+                //$this->addNewRoutesToauthFile($item['basics']['tablename']);
+            }
+        }
 
         return 0;
     }

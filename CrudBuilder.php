@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\BoilerplateHelper;
 
+use App\Console\Commands\boilerplatehelper\clasess\BuilderSteps;
 use Illuminate\Console\Command;
 
 class CrudBuilder extends Command
@@ -37,7 +38,13 @@ class CrudBuilder extends Command
      */
     public function handle()
     {
+
+        $builder = new BuilderSteps();
+
         $this->info('Welcome in asaycrudbuilder for laravel boilerplate');
+
+        $this->info($builder->getRoutes('providers'));
+
         return 0;
     }
 }

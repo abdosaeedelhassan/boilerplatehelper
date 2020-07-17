@@ -77,7 +77,7 @@ class BuilderSteps
             $ctr++;
             $fields .= "'".$filed[0]."'";
         }
-        $fileHelper = new FileHelper($this->templates_dir_path . '/ModelClass.php');
+        $fileHelper = new FileHelper($this->templates_dir_path . '/ModelClass');
         $str = str_replace('//fileds', $fields, $fileHelper->getContent());
         $str = str_replace('ModelClass', $model_name, $str);
 
@@ -91,7 +91,7 @@ class BuilderSteps
             }
             $ctr++;
             $use_name .= $model_name.$key;
-            $fileHelper = new FileHelper($this->templates_dir_path . '/Traits'.$key.'.php');
+            $fileHelper = new FileHelper($this->templates_dir_path . '/Traits'.$key);
             $temp = str_replace('Traits'.$key, ucfirst($model_name).$key, $fileHelper->getContent());
             $this->createDir($this->models_traits_dir_path.DIRECTORY_SEPARATOR.$key);
             $this->createFile($this->models_traits_dir_path.DIRECTORY_SEPARATOR.$key.DIRECTORY_SEPARATOR.ucfirst($model_name).$key.'.php', $temp);

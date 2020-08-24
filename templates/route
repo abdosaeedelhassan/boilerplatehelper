@@ -3,25 +3,25 @@ Route::group([
         'as' => 'role.',
         'middleware' => 'role:' . config('boilerplate.access.role.admin'),
     ], function () {
-        Route::get('/', [FurnitureTypesController::class, 'index'])
+        Route::get('/', [RoleController::class, 'index'])
             ->name('index')
             ->breadcrumbs(function (Trail $trail) {
                 $trail->parent('admin.dashboard')
                     ->push(__('role'), route('admin.auth.role.index'));
             });
-        Route::get('create', [FurnitureTypesController::class, 'create'])
+        Route::get('create', [RoleController::class, 'create'])
             ->name('create')
             ->breadcrumbs(function (Trail $trail) {
                 $trail->parent('admin.auth.role.index')
                     ->push(__('role form'), route('admin.auth.role.create'));
             });
-        Route::get('{role}/edit', [FurnitureTypesController::class, 'edit'])
+        Route::get('{role}/edit', [RoleController::class, 'edit'])
             ->name('edit')
             ->breadcrumbs(function (Trail $trail, $id) {
                 $trail->parent('admin.auth.role.index')
-                    ->push(__('role form'), route('admin.auth.ordertypes.edit', $id));
+                    ->push(__('role form'), route('admin.auth.role.edit', $id));
             });
-        Route::get('{role}/show', [FurnitureTypesController::class, 'show'])
+        Route::get('{role}/show', [RoleController::class, 'show'])
             ->name('show')
             ->breadcrumbs(function (Trail $trail, $id) {
                 $trail->parent('admin.auth.role.index')

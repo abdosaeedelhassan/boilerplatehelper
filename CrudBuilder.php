@@ -57,10 +57,11 @@ class CrudBuilder extends Command
             // check if model not exists
             if (! file_exists($this->models_dir_path.DIRECTORY_SEPARATOR.ucfirst($item['basics']['tablename']).'.php')) {
 
-                //$this->info($builder->createMigrationFile($item));
-                //$this->info($builder->createModelFile($item));
-                //$this->info($builder->addNewRoutesToauthFile($item['basics']['tablename']));
+                $this->info($builder->createMigrationFile($item));
+                $this->info($builder->createModelFile($item));
+                $this->info($builder->addNewRoutesToauthFile($item['basics']['tablename']));
                 $this->info($builder->createRequestFiles($item['basics']['tablename']));
+                $this->info($builder->createControllerFile($item['basics']['tablename']));
             }
         }
 

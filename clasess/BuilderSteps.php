@@ -13,6 +13,8 @@ class BuilderSteps
     private $models_dir_path;
     private $models_traits_dir_path;
     private $requests_dir_path;
+    private $controller_dir_path;
+
 
     private $routes_auth_file_path;
 
@@ -25,6 +27,8 @@ class BuilderSteps
         $this->routes_auth_file_path = base_path('routes/backend/auth.php');
         $this->migrations_dir_path = base_path('database/migrations');
         $this->requests_dir_path = app_path('Domains/Auth/Http/Requests');
+        $this->controller_dir_path = app_path('Domains/Auth/Http/Controllers');
+
     }
 
 
@@ -157,17 +161,22 @@ class BuilderSteps
         }
 
         return $model_name . ' requests created...';
-
     }
 
-    public function createControllerFile($model_component): string
+    public function createControllerFile($model_name): string
     {
-        $model_name = ucfirst($model_component['basics']['tablename']);
-        $fields = '';
-        $ctr = 0;
+        /**
+         * create requests directory
+         */
+        $this->createDir($this->controller_dir_path . DIRECTORY_SEPARATOR . 'Backend' . DIRECTORY_SEPARATOR . $model_name);
+        /**
+         * create requests files
+         */
+        $fileHelper = new FileHelper($this->templates_dir_path . '/controller');
+        $str = str_replace('ModelName', $model_name, $fileHelper->getContent());
+        $str = str_replace('modelname', strtolower($model_name), $str);
+        $this->createFile($this->controller_dir_path . DIRECTORY_SEPARATOR . 'Backend' . DIRECTORY_SEPARATOR . ucfirst($model_name) . DIRECTORY_SEPARATOR . ucfirst($model_name) . 'Controller.php', $str);
 
-
-        // ModelName
-        // modelname
+        return $model_name . 'Controller created...';
     }
 }

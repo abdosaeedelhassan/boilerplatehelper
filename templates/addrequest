@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Domains\Auth\Http\Requests\Backend\ModelName;
+
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Foundation\Http\FormRequest;
+
+
+class AddModelNameRequest extends FormRequest
+{
+    public function authorize()
+    {
+        return true;//auth()->user()->can('admin.access.tagyeems.add');
+    }
+    public function rules()
+    {
+        return [
+            //
+        ];
+    }
+    protected function failedAuthorization()
+    {
+        throw new AuthorizationException(__('You can not delete the Administrator role.'));
+    }
+}

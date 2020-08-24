@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Domains\Auth\Http\Controllers\Backend\ModelName;
+
+use App\Domains\Auth\Http\Requests\Backend\ModelName\AddModelNameRequest;
+use App\Domains\Auth\Http\Requests\Backend\ModelName\EditModelNameRequest;
+use App\Domains\Auth\Http\Requests\Backend\ModelName\ListModelNameRequest;
+use App\Domains\Auth\Models\ModelName;
+use App\Http\Controllers\Controller;
+
+class ModelNameController extends Controller
+{
+    public function __construct()
+    {
+        //
+    }
+
+    public function index(ListModelNameRequest $request)
+    {
+        return view('livewire.backend.auth.modelname.index');
+    }
+
+    public function create(AddModelNameRequest $request)
+    {
+        return view('livewire.backend.auth.modelname.data')->withAction('add')->withId('');
+    }
+
+    public function edit(EditModelNameRequest $request, ModelName $modelname)
+    {
+        return view('livewire.backend.auth.modelname.data')->withAction('edit')->withId($modelname->id);
+    }
+
+    public function show(EditModelNameRequest $request, ModelName $modelname)
+    {
+        return view('livewire.backend.auth.modelname.data')->withAction('show')->withId($modelname->id);
+    }
+}

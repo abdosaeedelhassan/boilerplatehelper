@@ -12,6 +12,7 @@ class BuilderSteps
     private $migrations_dir_path;
     private $models_dir_path;
     private $models_traits_dir_path;
+    private $requests_dir_path;
 
     private $routes_auth_file_path;
 
@@ -23,6 +24,7 @@ class BuilderSteps
         $this->models_traits_dir_path = $this->models_dir_path . '/Traits';
         $this->routes_auth_file_path = base_path('routes/backend/auth.php');
         $this->migrations_dir_path = base_path('database/migrations');
+        $this->requests_dir_path = app_path('Domains/Auth/Http/Requests');
     }
 
 
@@ -42,15 +44,15 @@ class BuilderSteps
         $fields = '';
         foreach ($model_component['fields'] as $filed) {
             if ($filed[1] == 'ref') {
-                $fields .= '$table->unsignedBigInteger("' . $filed[0] . '");'."\n";
+                $fields .= '$table->unsignedBigInteger("' . $filed[0] . '");' . "\n";
                 $fields .= '$table->foreign("' . $filed[0] . '")->references("id")->on("' . $filed[2]['tablename'] . '")->onDelete("cascade");' . "\n";
-            } else if ($filed[1] == 'string' || $filed[1] == 'image') {
+            } elseif ($filed[1] == 'string' || $filed[1] == 'image') {
                 $nullable = $filed[2] == 'nullable' ? '' : 'false';
                 $fields .= '$table->string("' . $filed[0] . '")->nullable(' . $nullable . ');' . "\n";
-            } else if ($filed[1] == 'integer') {
+            } elseif ($filed[1] == 'integer') {
                 $nullable = $filed[2] == 'nullable' ? '' : 'false';
                 $fields .= '$table->integer("' . $filed[0] . '")->nullable(' . $nullable . ');' . "\n";
-            } else if ($filed[1] == 'checkbox') {
+            } elseif ($filed[1] == 'checkbox') {
                 $fields .= '$table->integer("' . $filed[0] . '")->default(0);' . "\n";
             }
         }
@@ -94,7 +96,7 @@ class BuilderSteps
          */
         $routes_auth_file_fileHelper->setContent($route_auth_file_content);
 
-        return $model_name.' Routes added.';
+        return $model_name . ' Routes added.';
     }
 
     public function createModelFile($model_component): string
@@ -137,5 +139,35 @@ class BuilderSteps
         $this->createFile($this->models_dir_path . DIRECTORY_SEPARATOR . ucfirst($model_name) . '.php', $str);
 
         return 'Model ' . $model_name . ' created...';
+    }
+
+    public function createRequestFiles($model_name): string
+    {
+        /**
+         * create requests directory
+         */
+        $this->createDir($this->requests_dir_path . DIRECTORY_SEPARATOR . 'Backend' . DIRECTORY_SEPARATOR . $model_name);
+        /**
+         * create requests files
+         */
+        foreach (['add', 'edit', 'list'] as $name) {
+            $fileHelper = new FileHelper($this->templates_dir_path . '/' . $name . 'request');
+            $str = str_replace('ModelName', $model_name, $fileHelper->getContent());
+            $this->createFile($this->requests_dir_path . DIRECTORY_SEPARATOR . 'Backend' . DIRECTORY_SEPARATOR . ucfirst($model_name) . DIRECTORY_SEPARATOR . ucfirst($name) . ucfirst($model_name) . 'Request.php', $str);
+        }
+
+        return $model_name . ' requests created...';
+
+    }
+
+    public function createControllerFile($model_component): string
+    {
+        $model_name = ucfirst($model_component['basics']['tablename']);
+        $fields = '';
+        $ctr = 0;
+
+
+        // ModelName
+        // modelname
     }
 }

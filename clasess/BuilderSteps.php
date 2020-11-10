@@ -81,8 +81,8 @@ class BuilderSteps
         /**
          * add use statements to routes auth file
          */
-        $str = 'use App\\Domains\\Auth\\Http\\Controllers\\Backend\\' . ucfirst($model_name) . '\\' . ucfirst($model_name) . 'Controller;' . "\n";
-        $str .= 'use App\\Domains\\Auth\\Models\\' . ucfirst($model_name) . ';' . "\n";
+        $str = 'use App\\Http\\Controllers\\Backend\\' . ucfirst($model_name) . '\\' . ucfirst($model_name) . 'Controller;' . "\n";
+        $str .= 'use App\\Models\\Backend\\' . ucfirst($model_name) . ';' . "\n";
         $str .= '//use_statement';
         $route_auth_file_content = str_replace('//use_statement', $str, $route_auth_file_content);
         /**
@@ -121,7 +121,7 @@ class BuilderSteps
         $use_name = '';
         $ctr = 0;
         foreach (['Attribute', 'Method', 'Relationship', 'Scope'] as $key) {
-            $use_attribute = 'use App\\Domains\\Auth\\Models\\Traits\\' . $key . '\\' . $model_name . $key . ';' . "\n//use_statement_path";
+            $use_attribute = 'use App\\Models\\Backend\\Traits\\' . $key . '\\' . $model_name . $key . ';' . "\n//use_statement_path";
             $str = str_replace('//use_statement_path', $use_attribute, $str);
             if ($ctr > 0) {
                 $use_name .= ',';

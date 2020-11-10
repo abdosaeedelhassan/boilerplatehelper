@@ -35,7 +35,7 @@ class CrudBuilder extends Command
     {
         parent::__construct();
         $this->to_do_list_file_path = app_path('Console/Commands/' . $this->app_name . DIRECTORY_SEPARATOR.'ToDoList.php');
-        $this->models_dir_path = app_path('Domains/Auth/Models');
+        $this->models_dir_path = app_path('Models/Backend');
 
     }
 

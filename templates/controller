@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Auth\Http\Controllers\Backend\ModelName;
+namespace App\Http\Controllers\Backend\ModelName;
 
 use App\Domains\Auth\Http\Requests\Backend\ModelName\AddModelNameRequest;
 use App\Domains\Auth\Http\Requests\Backend\ModelName\EditModelNameRequest;

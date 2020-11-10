@@ -13,18 +13,18 @@ Route::group([
             ->name('create')
             ->breadcrumbs(function (Trail $trail) {
                 $trail->parent('admin.auth.role.index')
-                    ->push(__('role form'), route('admin.auth.role.create'));
+                    ->push(__('role data'), route('admin.auth.role.create'));
             });
         Route::get('{role}/edit', [RoleController::class, 'edit'])
             ->name('edit')
             ->breadcrumbs(function (Trail $trail, $id) {
                 $trail->parent('admin.auth.role.index')
-                    ->push(__('role form'), route('admin.auth.role.edit', $id));
+                    ->push(__('role data'), route('admin.auth.role.edit', $id));
             });
         Route::get('{role}/show', [RoleController::class, 'show'])
             ->name('show')
             ->breadcrumbs(function (Trail $trail, $id) {
                 $trail->parent('admin.auth.role.index')
-                    ->push(__('role form'), route('admin.auth.role.show', $id));
+                    ->push(__('role data'), route('admin.auth.role.show', $id));
             });
     });

@@ -22,13 +22,12 @@ class BuilderSteps
     public function __construct()
     {
         $this->templates_dir_path = app_path('Console/Commands/' . $this->app_name . '/templates');
-        $this->models_dir_path = app_path('Domains/Auth/Models');
+        $this->models_dir_path = app_path('Models/Backend');
         $this->models_traits_dir_path = $this->models_dir_path . '/Traits';
         $this->routes_auth_file_path = base_path('routes/backend/auth.php');
         $this->migrations_dir_path = base_path('database/migrations');
-        $this->requests_dir_path = app_path('Domains/Auth/Http/Requests');
-        $this->controller_dir_path = app_path('Domains/Auth/Http/Controllers');
-
+        $this->requests_dir_path = app_path('Http/Requests/Backend');
+        $this->controller_dir_path = app_path('Http/Controllers/Backend');
     }
 
 

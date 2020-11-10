@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Auth\Models\Traits\Scope;
+namespace App\Models\Backend\Traits\Scope;
 
 trait TraitsScope
 {

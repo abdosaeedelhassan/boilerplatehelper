@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Backend\ModelName;
 
-use App\Domains\Auth\Http\Requests\Backend\ModelName\AddModelNameRequest;
-use App\Domains\Auth\Http\Requests\Backend\ModelName\EditModelNameRequest;
-use App\Domains\Auth\Http\Requests\Backend\ModelName\ListModelNameRequest;
-use App\Domains\Auth\Models\ModelName;
+use App\Http\Requests\Backend\ModelName\AddModelNameRequest;
+use App\Http\Requests\Backend\ModelName\EditModelNameRequest;
+use App\Http\Requests\Backend\ModelName\ListModelNameRequest;
+use App\Models\ModelName;
 use App\Http\Controllers\Controller;
 
 class ModelNameController extends Controller

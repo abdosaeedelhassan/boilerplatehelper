@@ -39,4 +39,24 @@ return [
             '2' => ['published', 'checkbox'],
         ],
     ],
+    '1' => [
+        'basics' => [
+            'tablename' => 'Regions',
+        ],
+        'fields' => [
+            '0' => ['name', 'string', 'notnull'],
+            '1' => ['coordinates', 'string', 'nullable'],
+            '2' => ['pricing', 'string', 'nullable'],
+            '3' => ['published', 'checkbox'],
+        ],
+    ],
+    '3' => [
+        'basics' => [
+            'tablename' => 'Questions',
+        ],
+        'fields' => [
+            '0' => ['text', 'string', 'notnull'],
+            '1' => ['published', 'checkbox'],
+        ],
+    ],
 ];
